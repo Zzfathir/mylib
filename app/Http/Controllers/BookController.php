@@ -15,5 +15,9 @@ class BookController extends Controller
         return BookResource::collection($books->loadMissing('pustakawan:id,name'));
     }
 
+    public function show($id) {
+
+    }
+
 
 }
