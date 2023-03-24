@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/books', [BookController::class, 'index']);
 Route::get('/books/{id}', [BookController::class, 'show'])->middleware('auth:sanctum');
-Route::post('/books', [BookController::class, 'store']);
+Route::post('/books', [BookController::class, 'store'])->middleware('auth:sanctum');
+Route::patch('/books/{id}', [BookController::class, 'update'])->middleware('auth:sanctum');
 
 
 Route::post('/login', [AuthenticationController::class, 'login']);

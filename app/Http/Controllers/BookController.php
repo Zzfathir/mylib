@@ -26,6 +26,7 @@ class BookController extends Controller
     public function store(Request $request) {
         $request->validate([
             'title' => 'required',
+            'author' => 'required',
         ]);
 
         $cover = null;
@@ -46,6 +47,31 @@ class BookController extends Controller
     }
 
 
+    public function update(Request $request, $id) {
+        $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+        ]);
+
+        $cover = null;
+
+        if($request->file) {
+            $fileName = $this->generateRandomString();
+            $extension = $request->file->extension();
+
+            $cover = $fileName.'.'.$extension;
+            Storage::putFileAs('cover', $request->file, $cover);
+        }
+
+        $request['cover'] = $cover;
+
+
+        $book = Book::findOrFail($id);
+        $book->update($request->all());
+
+        // return response()->json('sudah diubah');
+        return new DetailBookResource($book->loadMissing('pustakawans:id,name'));
+    }
 
 
     public function generateRandomString($length = 20) {
