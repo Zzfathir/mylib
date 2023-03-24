@@ -73,6 +73,14 @@ class BookController extends Controller
         return new DetailBookResource($book->loadMissing('pustakawans:id,name'));
     }
 
+    public function delete($id) {
+        $post = Book::findOrFail($id);
+        $post->delete();
+
+        return response()->json([
+            'messege' => 'Buku Sudah Di Hapus'
+        ]);
+    }
 
     public function generateRandomString($length = 20) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
