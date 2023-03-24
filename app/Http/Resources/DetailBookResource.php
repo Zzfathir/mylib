@@ -18,8 +18,14 @@ class DetailBookResource extends JsonResource
             'id' => $this->id,
             'cover' => $this->cover,
             'title' => $this->title,
-            'pustakawan' => $this->pustakawan,
-            
+            'pustakawan' => $this->whenLoaded('pustakawans'),
+            'peminjam buku ini' => $this->whenLoaded('borrows', function() {
+                return collect($this->borrows)->each(function($borrow) {
+                    $borrow->borrower;
+                    return $borrow;
+                });
+            })
+
 
         ];
     }

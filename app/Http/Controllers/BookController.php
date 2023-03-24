@@ -13,11 +13,11 @@ class BookController extends Controller
     public function index() {
         $books = Book::all();
 
-        return BookResource::collection($books->loadMissing('pustakawan:id,name'));
+        return BookResource::collection($books);
     }
 
     public function show($id) {
-        $book = Book::with('pustakawan:id,name')->findOrFail($id);
+        $book = Book::with('pustakawans:id,name','borrows:id,name')->findOrFail($id);
         return new DetailBookResource($book);
     }
 
