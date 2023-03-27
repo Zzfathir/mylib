@@ -21,7 +21,7 @@ class DetailBookResource extends JsonResource
             'pustakawan' => $this->whenLoaded('pustakawans'),
             'peminjam buku ini' => $this->whenLoaded('borrows', function() {
                 return collect($this->borrows)->each(function($borrow) {
-                    $borrow->borrower;
+                    $borrow->borrows;
                     return $borrow;
                 });
             })
