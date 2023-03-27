@@ -19,7 +19,13 @@ class BorrowController extends Controller
         $request['user_id'] = auth()->user()->id;
         $borrow = Borrow::create($request->all());
 
-        // return response()->json($comment);
         return new BorrowResource($borrow->loadMissing(['borrower:id,name']));
+    }
+
+    public function delete($id) {
+        $borrow = Borrow::findOrFail($id);
+        $borrow->delete();
+
+        return new BorrowResource($borrow->loadMissing('borrower:id,name'));
     }
 }
