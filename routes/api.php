@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::post('/books', [BookController::class, 'store']);
     Route::patch('/books/{id}', [BookController::class, 'update']);
     Route::delete('/books/{id}', [BookController::class, 'delete']);
+
+    Route::post('/borrow', [BorrowController::class, 'store']);
 
     Route::post('/login', [AuthenticationController::class, 'login']);
     Route::get('/logout', [AuthenticationController::class, 'logout']);
