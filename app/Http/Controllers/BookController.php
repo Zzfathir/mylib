@@ -108,4 +108,18 @@ class BookController extends Controller
         return $randomString;
     }
 
+    public function search(Request $request){
+        $search = $request->input('q');
+
+        $books = Book::where('post_title', 'like', '%'.$search.'%')
+                    ->orWhere('content', 'like', '%'.$search.'%')
+                    ->get();
+
+    if ($books->isEmpty()) {
+        return response()->json(['error' => 'no books found'], 404);
+    }
+
+    return response()->json($books);
+    }
+
 }

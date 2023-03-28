@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class BorrowController extends Controller
 {
+    public function index() {
+        $borrows = Borrow::all();
+        return BorrowResource::collection($borrows);
+    }
+
     public function store(Request $request) {
 
         $request->validate([

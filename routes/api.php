@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->group(function() {
 
     Route::get('/books/{id}', [BookController::class, 'show']);
-    Route::post('/books', [BookController::class, 'store']);
+    Route::post('/books', [BookController::class, 'store'])->middleware('pustakawan');
     Route::patch('/books/{id}', [BookController::class, 'update']);
     Route::delete('/books/{id}', [BookController::class, 'delete']);
 
@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function() {
  });
 
 Route::get('/books', [BookController::class, 'index']);
+Route::get('/borrow', [BorrowController::class, 'index']);
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
