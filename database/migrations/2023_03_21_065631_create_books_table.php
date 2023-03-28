@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('cover', 255)->nullable();
+            $table->string('image', 255)->nullable();
             $table->string('title')->nullable();
             $table->string('author');
             $table->unsignedBigInteger('pustakawan');

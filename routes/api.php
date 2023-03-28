@@ -26,8 +26,11 @@ Route::middleware(['auth:sanctum'])->group(function() {
     Route::post('/borrow', [BorrowController::class, 'store']);
     Route::delete('/borrow/{id}', [BorrowController::class, 'delete']);
 
-    Route::post('/login', [AuthenticationController::class, 'login']);
+
     Route::get('/logout', [AuthenticationController::class, 'logout']);
  });
 
 Route::get('/books', [BookController::class, 'index']);
+
+Route::post('/register', [AuthenticationController::class, 'register']);
+Route::post('/login', [AuthenticationController::class, 'login']);

@@ -16,7 +16,7 @@ class DetailBookResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'cover' => $this->cover,
+            'cover' => $this->image,
             'title' => $this->title,
             'pustakawan' => $this->whenLoaded('pustakawans'),
             'Total Borrower'=> $this->whenLoaded('borrows', function() {

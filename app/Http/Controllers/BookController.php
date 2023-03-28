@@ -29,17 +29,26 @@ class BookController extends Controller
             'author' => 'required',
         ]);
 
-        $cover = null;
+        $image = null;
 
-        if($request->file) {
-            $fileName = $this->generateRandomString();
+        if ($request->file) {
+            $validation = ['png', 'jpg', 'jpeg'];
+            $fileName = $this-> generateRandomString();
             $extension = $request->file->extension();
 
-            $cover = $fileName.'.'.$extension;
-            Storage::putFileAs('cover', $request->file, $cover);
-        }
+            $image = $fileName. '.' .$extension;
 
-        $request['cover'] = $cover;
+            if(!in_array($extension, $validation)){
+                return response()->json([
+                    "message" => "is not an images"
+                ]);
+        }
+    
+            Storage::putFileAs('image', $request->file, $image);
+            }
+
+        
+        $request['image'] = $image;
         $request['pustakawan'] = Auth::user()->id;
 
         $book = Book::create($request->all());
@@ -53,17 +62,24 @@ class BookController extends Controller
             'author' => 'required',
         ]);
 
-        $cover = null;
+        $image = null;
 
-        if($request->file) {
-            $fileName = $this->generateRandomString();
+        if ($request->file) {
+            $validation = ['png', 'jpg', 'jpeg'];
+            $fileName = $this-> generateRandomString();
             $extension = $request->file->extension();
+            $image = $fileName. '.' .$extension;
 
-            $cover = $fileName.'.'.$extension;
-            Storage::putFileAs('cover', $request->file, $cover);
-        }
+            if(!in_array($extension, $validation)){
+                return response()->json([
+                    "message" => "is not an images"
+                ]);
+            }
+            Storage::putFileAs('image', $request->file, $image);
+            }
 
-        $request['cover'] = $cover;
+        
+        $request['image'] = $image;
 
 
         $book = Book::findOrFail($id);
@@ -82,7 +98,7 @@ class BookController extends Controller
         ]);
     }
 
-    public function generateRandomString($length = 20) {
+    public function generateRandomString($length = 30) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
