@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Book;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Pustakawan
+class borrower
 {
     /**
      * Handle an incoming request.
@@ -19,12 +18,11 @@ class Pustakawan
     {
         $UserNow = Auth::user();
         
-        if($UserNow->role != 'pustakawan') {
+        if($UserNow->role != 'borrower') {
             return response()->json([
-                'messege' => 'harus pustakawan'
+                'messege' => 'harus berlangganan'
             ], 404);
         }
-
 
         return $next($request);
     }

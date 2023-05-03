@@ -20,18 +20,20 @@ Route::middleware(['auth:sanctum'])->group(function() {
 
     Route::get('/books/{id}', [BookController::class, 'show']);
     Route::post('/books', [BookController::class, 'store'])->middleware('pustakawan');
-    Route::patch('/books/{id}', [BookController::class, 'update']);
-    Route::delete('/books/{id}', [BookController::class, 'delete']);
+    Route::patch('/books/{id}', [BookController::class, 'update'])->middleware('pustakawan');
+    Route::delete('/books/{id}', [BookController::class, 'delete'])->middleware('pustakawan');
 
-    Route::post('/borrow', [BorrowController::class, 'store']);
-    Route::delete('/borrow/{id}', [BorrowController::class, 'delete']);
+    Route::post('/borrow', [BorrowController::class, 'store'])->middleware('borrower');
+    Route::delete('/borrow/{id}', [BorrowController::class, 'delete'])->middleware('pustakawan');
 
 
     Route::get('/logout', [AuthenticationController::class, 'logout']);
+    Route::get('/me', [AuthenticationController::class, 'saya']);
  });
 
 Route::get('/books', [BookController::class, 'index']);
 Route::get('/borrow', [BorrowController::class, 'index']);
 
 Route::post('/register', [AuthenticationController::class, 'register']);
+Route::post('/pregister', [AuthenticationController::class, 'registerPustakawan']);
 Route::post('/login', [AuthenticationController::class, 'login']);

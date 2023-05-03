@@ -21,15 +21,7 @@ class DetailBookResource extends JsonResource
             'pustakawan' => $this->whenLoaded('pustakawans'),
             'Total Borrower'=> $this->whenLoaded('borrows', function() {
                 return count($this->borrows);
-            }),
-            'peminjam buku ini' => $this->whenLoaded('borrows', function() {
-                return collect($this->borrows)->each(function($borrow) {
-                    $borrow->borrower;
-                    return $borrow;
-                });
             })
-
-
         ];
     }
 }

@@ -9,16 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Borrow extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
    protected $fillable = [
-    'name',
     'book_id',
-    'user_id',
+    'borrower',
    ];
 
    public function borrower(): BelongsTo
    {
-       return $this->belongsTo(User::class, 'user_id', 'id');
+       return $this->belongsTo(User::class, 'borrower', 'id');
    }
 }

@@ -12,14 +12,25 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    public function index() {
-        $books = Book::all();
+    public function index(Request $request) {
+
+        $search = $request->input('q');
+
+        $books = Book::where('title', 'like', '%'.$search.'%')
+                    ->orWhere('author', 'like', '%'.$search.'%')
+                    ->get();
+
+        if ($books->isEmpty()) {
+
+           return Book::all(); 
+
+        }
 
         return BookResource::collection($books);
     }
 
     public function show($id) {
-        $book = Book::with('pustakawans:id,name','borrows:id,name')->findOrFail($id);
+        $book = Book::with('pustakawans:id,name', 'borrows:id,book_id,borrower')->findOrFail($id);
         return new DetailBookResource($book);
     }
 
@@ -28,7 +39,7 @@ class BookController extends Controller
             'title' => 'required',
             'author' => 'required',
         ]);
-
+        
         $image = null;
 
         if ($request->file) {
@@ -68,13 +79,15 @@ class BookController extends Controller
             $validation = ['png', 'jpg', 'jpeg'];
             $fileName = $this-> generateRandomString();
             $extension = $request->file->extension();
+
             $image = $fileName. '.' .$extension;
 
             if(!in_array($extension, $validation)){
                 return response()->json([
                     "message" => "is not an images"
                 ]);
-            }
+        }
+    
             Storage::putFileAs('image', $request->file, $image);
             }
 
@@ -106,20 +119,6 @@ class BookController extends Controller
             $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
         return $randomString;
-    }
-
-    public function search(Request $request){
-        $search = $request->input('q');
-
-        $books = Book::where('post_title', 'like', '%'.$search.'%')
-                    ->orWhere('content', 'like', '%'.$search.'%')
-                    ->get();
-
-    if ($books->isEmpty()) {
-        return response()->json(['error' => 'no books found'], 404);
-    }
-
-    return response()->json($books);
     }
 
 }

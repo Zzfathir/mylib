@@ -18,10 +18,9 @@ class BorrowController extends Controller
 
         $request->validate([
             'book_id' => 'required|exists:books,id',
-            'name' => 'required'
         ]);
 
-        $request['user_id'] = auth()->user()->id;
+        $request['borrower'] = auth()->user()->id;
         $borrow = Borrow::create($request->all());
 
         return new BorrowResource($borrow->loadMissing(['borrower:id,name']));

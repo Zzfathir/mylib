@@ -16,7 +16,7 @@ class Book extends Model
         'image',
         'title',
         'author',
-        'pustakawan'
+        'pustakawan',
 
     ];
 

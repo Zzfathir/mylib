@@ -16,8 +16,8 @@ class BorrowResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'book_id' => $this->book_id,
+            'borrower_id' => $this->borrower,
+            'Book_id' => $this->book_id,
             'created_at' => date_format($this->created_at, "Y/m/d H:i:s"),
         ];
     }

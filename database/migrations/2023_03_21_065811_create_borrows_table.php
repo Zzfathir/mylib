@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('borrows', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('book_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('borrower');
             $table->timestamps();
             $table->foreign('book_id')->references('id')->on('books');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('borrower')->references('id')->on('users');
         });
     }
 
